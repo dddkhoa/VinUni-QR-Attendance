@@ -8,14 +8,6 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from pylti1p3.contrib.flask import (
-    FlaskOIDCLogin,
-    FlaskMessageLaunch,
-    FlaskRequest,
-    FlaskCacheDataStorage,
-)
-from pylti1p3.exception import LtiException
-from pylti1p3.tool_config import ToolConfDict
 
 from main.commons.error_handlers import register_error_handlers
 from main.config import config
@@ -43,7 +35,7 @@ cache = Cache(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-canvas = Canvas(config.CANVAS_API_URL, config.CANVAS_API_KEY)
+# canvas = Canvas(config.CANVAS_API_URL, config.CANVAS_API_KEY)
 attendance_secret_key = random.randint(0, 1000000)
 
 CORS(app, resources={r"/*": {"origins": "*"}})

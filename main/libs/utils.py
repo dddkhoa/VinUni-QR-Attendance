@@ -5,9 +5,11 @@ from hashlib import sha512
 from os import urandom
 
 import jwt
+from pylti1p3.tool_config import ToolConfDict
 
 from main import config
 from main.commons.exceptions import ExpiredAccessToken, InvalidAccessToken
+from main.models.lti_config import LTIConfig
 
 
 def generate_random_attendance_key():
@@ -52,3 +54,31 @@ def decode_jwt_token(token):
 
     except jwt.InvalidTokenError:
         raise InvalidAccessToken()
+
+
+def get_lti_config(iss, client_id):
+    lti = LTIConfig.query.filter_by(iss=iss, client_id=client_id).first()
+
+    settings = {
+        lti.iss: [
+            {
+                "client_id": lti.client_id,
+                "auth_login_url": lti.auth_login_url,
+                "auth_token_url": lti.auth_token_url,
+                "auth_audience": "null",
+                "key_set_url": lti.key_set_url,
+                "key_set": None,
+                "deployment_ids": [lti.deployment_id],
+            }
+        ]
+    }
+
+    private_key = lti.private_key_file
+    public_key = lti.public_key_file
+    tool_conf = ToolConfDict(settings)
+
+    tool_conf.set_private_key(iss, private_key, client_id=client_id)
+    tool_conf.set_public_key(iss, public_key, client_id=client_id)
+
+    return tool_conf
+
