@@ -1,7 +1,7 @@
 from main import db
 
 
-class Status(db.Model):
+class StatusModel(db.Model):
     __tablename__ = "status"
     id = db.Column(db.Integer, primary_key=True)
     class_date = db.Column(db.Date, nullable=False)
@@ -11,7 +11,7 @@ class Status(db.Model):
     course_id = db.Column(db.Integer, nullable=False)
     account_id = db.Column(db.Integer, nullable=False)
     teacher_id = db.Column(db.Integer, nullable=False)
-    tool_consumer_instance_guid = db.Column(db.String, nullable=False)
+    # tool_consumer_instance_guid = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now(), nullable=False)
     updated_at = db.Column(
         db.DateTime, default=db.func.now(), onupdate=db.func.now(), nullable=False
@@ -39,7 +39,6 @@ class Status(db.Model):
         if self.student:
             attributes["student"] = self.student
 
-        attributes.update(self.seating_info())
         return attributes
 
     def student_stats(self):

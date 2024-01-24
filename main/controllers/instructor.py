@@ -11,10 +11,26 @@ from main.commons.decorators import (
 )
 from main.commons.exceptions import CategoryAlreadyExists
 from main.libs.utils import generate_random_attendance_key
-from main.models.category import CategoryModel
+# from main.models.category import CategoryModel
 
 # from main.schemas.base import PaginationSchema
 from main.schemas.checkin import QRSchema
+
+
+# Course-related APIs
+@app.route("/api/courses/<str:course_id>/sections", methods=["GET"])
+def get_course_sections(course_id):
+    pass
+
+
+@app.route("/api/courses/<str:course_id>/sections/<str:section_id>", methods=["GET"])
+def get_course_section(course_id, section_id):
+    pass
+
+
+@app.route("/api/courses/<str:course_id>/sections/<str:section_id>/students", methods=["GET"])
+def get_course_section_students(course_id, section_id):
+    pass
 
 
 @app.route("/api/qr/generate", methods=["GET"])
@@ -29,18 +45,18 @@ def get_checkin_qr(data):
 
         time.sleep(3)
 
-
-@app.route("/categories", methods=["POST"])
-@jwt_required
-# @validate_input(CategorySchema)
-def post_category(user_id, data):
-    if CategoryModel.query.filter_by(name=data["name"]).one_or_none():
-        raise CategoryAlreadyExists()
-
-    category = CategoryModel(name=data["name"], user_id=user_id)
-    db.session.add(category)
-    db.session.commit()
-    return {}
+#
+# @app.route("/categories", methods=["POST"])
+# @jwt_required
+# # @validate_input(CategorySchema)
+# def post_category(user_id, data):
+#     if CategoryModel.query.filter_by(name=data["name"]).one_or_none():
+#         raise CategoryAlreadyExists()
+#
+#     category = CategoryModel(name=data["name"], user_id=user_id)
+#     db.session.add(category)
+#     db.session.commit()
+#     return {}
 
 
 # @app.route("/categories/<int:category_id>", methods=["GET"])

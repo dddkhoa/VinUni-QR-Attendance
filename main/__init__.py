@@ -26,9 +26,10 @@ class ReverseProxied(object):
 
 app = Flask(__name__,
             static_url_path='',
-            static_folder='./frontend/static',
-            template_folder='./frontend/templates')
+            static_folder='../frontend/static',
+            template_folder='../frontend/templates')
 app.config.from_object(config)
+app.secret_key = app.config["SECRET_KEY"]
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 
 cache = Cache(app)

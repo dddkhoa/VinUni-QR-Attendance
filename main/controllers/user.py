@@ -2,8 +2,8 @@ from main import app, db
 from main.commons.decorators import validate_input
 from main.commons.exceptions import EmailAlreadyExists, InvalidEmailOrPassword
 from main.libs.utils import generate_jwt_token
-from main.models.user import UserModel
-from main.schemas.user import LoginUserSchema, RegisterUserSchema
+# from main.models.user import UserModel
+# from main.schemas.user import LoginUserSchema, RegisterUserSchema
 
 
 @app.route("/users/signup", methods=["POST"])

@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from flask import request, render_template, session, url_for, jsonify
+from flask import request, render_template, session, url_for, jsonify, redirect
 from pylti1p3.contrib.flask import (
     FlaskOIDCLogin,
     FlaskMessageLaunch,
@@ -58,6 +58,7 @@ def get_launch_data_storage():
 def login():
     session["iss"] = request.values.get("iss")
     session["client_id"] = request.values.get("client_id")
+    print(session)
 
     tool_conf = get_lti_config(session["iss"], session["client_id"])
 

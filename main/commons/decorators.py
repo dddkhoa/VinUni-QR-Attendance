@@ -12,8 +12,8 @@ from main.commons.exceptions import (
     ValidationError,
 )
 from main.libs.utils import decode_jwt_token
-from main.models.category import CategoryModel
-from main.models.item import ItemModel
+# from main.models.category import CategoryModel
+# from main.models.item import ItemModel
 
 
 def jwt_required(func):

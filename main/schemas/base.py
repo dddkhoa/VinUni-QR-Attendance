@@ -1,5 +1,5 @@
 from flask import jsonify
-from marshmallow import EXCLUDE, Schema, fields, pre_load, validate
+from marshmallow import Schema, fields, pre_load, validate, INCLUDE
 
 
 class BaseSchema(Schema):
@@ -9,7 +9,7 @@ class BaseSchema(Schema):
     )
 
     class Meta:
-        unknown = EXCLUDE
+        unknown = INCLUDE
 
     def jsonify(self, obj, many=False):
         return jsonify(self.dump(obj, many=many))
