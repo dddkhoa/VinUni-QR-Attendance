@@ -4,8 +4,8 @@ from main.schemas.base import BaseSchema
 
 
 class StatusSchema(BaseSchema):
-    id = fields.Integer(required=True)
-    class_date = fields.DateTime(required=True)
+    # id = fields.Integer(required=True)
+    class_date = fields.Date(required=True)
     section_id = fields.Integer(required=True)
     student_id = fields.Integer(required=True)
     attendance = fields.String(required=True)
@@ -13,10 +13,13 @@ class StatusSchema(BaseSchema):
     instructor_id = fields.Integer(required=True)
 
 
-class StatusUpdateSchema(StatusSchema):
-    id = fields.Integer(required=True)
+class StatusUpdateSchema(BaseSchema):
+    student_id = fields.Integer(required=True)
+    section_id = fields.Integer(required=True)
+    course_id = fields.Integer(required=True)
+    class_date = fields.Date(required=True)
     attendance = fields.String(required=False)
 
 
 class StatusListSchema(BaseSchema):
-    statuses = fields.Nested(StatusSchema(), required=True)
+    statuses = fields.List(fields.Nested(StatusSchema()), required=True)

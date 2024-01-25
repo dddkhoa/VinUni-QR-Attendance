@@ -1,11 +1,9 @@
-from flask import send_file
+from flask import send_file, request
 import time
 import requests
 
 from main import app, config, db, qr_secret_key
 from main.commons.decorators import (
-    check_existing_category,
-    check_owner,
     jwt_required,
     validate_input,
 )
@@ -25,16 +23,21 @@ def get_checkin_qr():
     return send_file(qr_code_image, mimetype="image/png")
 
 
-@app.route()
-def finish_checkin_session():
-    # Retrieve all attendance status for today session
-    # Fill in the lacking status
-    section_info = get_section_by_id_with_enrollments()
+# @app.route()
+# def finish_checkin_session():
+#     # Retrieve all attendance status for today session
+#     # Fill in the lacking status
+#     section_info = get_section_by_id_with_enrollments()
+#     pass
 
+
+@app.route("/api/instructors/attendance/", methods=["GET"])
+def get_attendance():
     pass
 
 
 @app.route("api/instructors/attendance/edit", methods=["PUT"])
 def edit_attendance():
-    pass
+    data = request.get_json()
+
 

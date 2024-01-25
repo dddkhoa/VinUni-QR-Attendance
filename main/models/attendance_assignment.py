@@ -20,6 +20,7 @@ class AttendanceAssignment:
         for assignment in self.assignments:
             if assignment.name == assignment_name:
                 self.assignment = assignment
+                self.max_point = self.assignment.points_possible
 
     def get_student_grade(self, student_id):
         section_id = StatusModel.query.filter_by(student_id=student_id,
@@ -42,6 +43,7 @@ class AttendanceAssignment:
 
         student_grade = (present_count * StatusGrade.PRESENT.value + late_count * StatusGrade.LATE.value)
         student_grade /= total_attendances
+        student_grade *= self.max_point
 
         return student_grade
 
@@ -59,5 +61,10 @@ class AttendanceAssignment:
                                     'url': self.tool_launch_url})
 
     def submit_grades(self, student_ids):
-        params = {"grade_data": self.get_student_grades(student_ids)}
-        self.assignment.submissions_bulk_update(params=params)
+        grades = self.get_student_grades(student_ids)
+        for student_id in student_ids:
+            grade = grades[student_id]
+            submission = self.assignment.get_submission(student_id)
+            submission.edit(submission={'posted_grade': grade,
+                                        'submission_type': 'basic_lti_launch',
+                                        'url': self.tool_launch_url})

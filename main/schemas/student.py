@@ -13,4 +13,4 @@ class StudentSchema(BaseSchema):
 
 
 class StudentListSchema(BaseSchema):
-    students = fields.Nested(StudentSchema(), required=True)
+    students = fields.List(fields.Nested(StudentSchema()), required=True)

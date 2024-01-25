@@ -7,6 +7,7 @@
     <title>{{ page_title }}</title>
     <script>
       var launchId = "{{ launch_id }}";
+      var role = "{{ user }}";
     </script>
 
     <link
@@ -18,7 +19,7 @@
     <div id="root"></div>
     <script
       type="text/javascript"
-      src="{{ url_for('static', filename='js/main.c198d859.js') }}"
+      src="{{ url_for('static', filename='js/main.1835e10a.js', role=role) }}"
       charset="utf-8"
     ></script>
   </body>

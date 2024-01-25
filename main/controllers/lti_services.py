@@ -60,7 +60,6 @@ def get_launch_data_storage():
 def login():
     session["iss"] = request.values.get("iss")
     session["client_id"] = request.values.get("client_id")
-    print(session)
 
     tool_conf = get_lti_config(session["iss"], session["client_id"])
 
@@ -100,8 +99,8 @@ def launch():
     else:
         raise Forbidden()
 
-    session["course_id"] = ""  # ...
-    session["user_id"] = ""    # ...
+    session["course_id"] = ""
+    session["user_id"] = ""
 
     session["is_deep_link_launch"] = message_launch.is_deep_link_launch()
     session["launch_id"] = message_launch.get_launch_id()

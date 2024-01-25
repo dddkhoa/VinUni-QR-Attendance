@@ -12,16 +12,17 @@ from main.schemas.status import StatusSchema, StatusListSchema, StatusUpdateSche
 
 
 @app.route("/api/courses/<int:course_id>/sections/<int:section_id>/statuses", methods=["GET"])
-@jwt_required
-def get_status_for_course_section(course_id, section_id, class_date, **__):
-    query = {"course_id": course_id, "section_id": section_id, "class_date": class_date}
+# @jwt_required
+def get_status_for_course_section(course_id, section_id, **__):
+    query = {"course_id": course_id, "section_id": section_id}
     statuses = StatusModel.query.filter_by(**query).all()
-    response = StatusListSchema().dump(statuses, many=True)
+    print(statuses)
+    response = StatusListSchema().dump(statuses)
     return response
 
 
 @app.route("/api/statuses/", methods=["POST"])
-@jwt_required
+# @jwt_required
 @validate_input(StatusListSchema)
 def create_statuses(data, **__):
     statuses = data.get("statuses", [])
@@ -34,7 +35,7 @@ def create_statuses(data, **__):
 
 
 @app.route("/api/statuses/<int:status_id>", methods=["PUT"])
-@jwt_required
+# @jwt_required
 @validate_input(StatusUpdateSchema)
 def update_status(status, data, **__):
     if StatusModel.query.filter_by(status_id=status.id).one_or_none():
@@ -47,15 +48,21 @@ def update_status(status, data, **__):
 
 
 @app.route("/api/courses/<int:course_id>/students/<int:student_id>/grades", methods=["POST"])
-@jwt_required
+# @jwt_required
 def submit_grade(course_id, student_id, **__):
+    student = StatusModel.query.filter_by(student_id=student_id, course_id=course_id).one_or_none()
+    if not student:
+        return {"message": "Student not found"}, 404
     attendance_assignment = AttendanceAssignment(canvas, course_id, config.LTI_TOOL_NAME)
     attendance_assignment.submit_grade(student_id)
     return {}
 
 
-@app.route("/api/courses/<int:course_id>//many", methods=["POST"])
-@jwt_required
-def submit_grades(course_id, assignment_id, student_ids, **__):
-
+@app.route("/api/courses/<int:course_id>/students/grades", methods=["POST"])
+# @jwt_required
+def submit_grades(course_id, **__):
+    data = request.get_json()
+    student_ids = data.get("student_ids", [])
+    attendance_assignment = AttendanceAssignment(canvas, course_id, config.LTI_TOOL_NAME)
+    attendance_assignment.submit_grades(student_ids)
     return {}
