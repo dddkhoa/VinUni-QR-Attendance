@@ -12,4 +12,4 @@ class SectionSchema(BaseSchema):
 
 
 class SectionListSchema(BaseSchema):
-    sections = fields.List(fields.Nested(SectionSchema()), required=True)
+    sections = fields.Nested(SectionSchema(), required=True)

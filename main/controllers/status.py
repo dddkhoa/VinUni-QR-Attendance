@@ -1,80 +1,61 @@
-from main import app, db
+from flask import request
+
+from main import app, db, config, canvas
 from main.commons.decorators import (
-    check_existing_category,
-    check_existing_item,
-    check_owner,
     jwt_required,
-    validate_input,
+    validate_input
 )
-from main.commons.exceptions import ItemAlreadyExists
 from main.models.status import StatusModel
+from main.models.attendance_assignment import AttendanceAssignment
 from main.schemas.base import PaginationSchema
-# from main.schemas.item import ItemListSchema, ItemSchema, ItemUpdateSchema
+from main.schemas.status import StatusSchema, StatusListSchema, StatusUpdateSchema
 
 
-# @app.route("/categories/<int:category_id>/items", methods=["GET"])
-# @check_existing_category
-# @validate_input(PaginationSchema)
-# def get_item_list(category_id, data, **__):
-#
-#     pagination = ItemModel.query.filter_by(category_id=category_id).paginate(
-#         data["page"], data["per_page"], max_per_page=20, error_out=False
-#     )
-#
-#     response = ItemListSchema().dump(pagination)
-#     return response
-#
-#
-# @app.route("/categories/<int:category_id>/items", methods=["POST"])
-# @jwt_required
-# @validate_input(ItemSchema)
-# @check_existing_category
-# @check_owner
-# def post_item(category_id, data, **__):
-#
-#     # Check if item name already exists
-#     if ItemModel.query.filter_by(name=data["name"]).one_or_none():
-#         raise ItemAlreadyExists()
-#
-#     # Create new item and save to db
-#     item = ItemModel(
-#         name=data["name"], description=data["description"], category_id=category_id
-#     )
-#     db.session.add(item)
-#     db.session.commit()
-#     return {}
-#
-#
-# @app.route("/categories/<int:category_id>/items/<int:item_id>", methods=["GET"])
-# @check_existing_category
-# @check_existing_item
-# def get_item(item, **__):
-#     return ItemSchema().dump(item)
-#
-#
-# @app.route("/categories/<int:category_id>/items/<int:item_id>", methods=["PUT"])
-# @jwt_required
-# @validate_input(ItemUpdateSchema)
-# @check_existing_category
-# @check_existing_item
-# @check_owner
-# def put_item(item, data, **__):
-#
-#     # Check if item name already exists
-#     if ItemModel.query.filter_by(name=data["name"]).one_or_none():
-#         raise ItemAlreadyExists()
-#
-#     item.query.filter_by(id=item.id).update(data)
-#     db.session.commit()
-#     return {}
-
-
-@app.route("/categories/<int:category_id>/items/<int:item_id>", methods=["DELETE"])
+@app.route("/api/courses/<int:course_id>/sections/<int:section_id>/statuses", methods=["GET"])
 @jwt_required
-@check_existing_category
-@check_existing_item
-@check_owner
-def delete_item(item, **__):
-    db.session.delete(item)
+def get_status_for_course_section(course_id, section_id, class_date, **__):
+    query = {"course_id": course_id, "section_id": section_id, "class_date": class_date}
+    statuses = StatusModel.query.filter_by(**query).all()
+    response = StatusListSchema().dump(statuses, many=True)
+    return response
+
+
+@app.route("/api/statuses/", methods=["POST"])
+@jwt_required
+@validate_input(StatusListSchema)
+def create_statuses(data, **__):
+    statuses = data.get("statuses", [])
+    for status in statuses:
+        temp_status = StatusModel(**status)
+        db.session.add(temp_status)
+
     db.session.commit()
+    return {}
+
+
+@app.route("/api/statuses/<int:status_id>", methods=["PUT"])
+@jwt_required
+@validate_input(StatusUpdateSchema)
+def update_status(status, data, **__):
+    if StatusModel.query.filter_by(status_id=status.id).one_or_none():
+        status.update(**data)
+        db.session.commit()
+        submit_grades()
+        return {}
+    else:
+        return {"message": "Status not found"}, 404
+
+
+@app.route("/api/courses/<int:course_id>/students/<int:student_id>/grades", methods=["POST"])
+@jwt_required
+def submit_grade(course_id, student_id, **__):
+    attendance_assignment = AttendanceAssignment(canvas, course_id, config.LTI_TOOL_NAME)
+    attendance_assignment.submit_grade(student_id)
+    return {}
+
+
+@app.route("/api/courses/<int:course_id>//many", methods=["POST"])
+@jwt_required
+def submit_grades(course_id, assignment_id, student_ids, **__):
+
     return {}

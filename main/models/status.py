@@ -9,40 +9,13 @@ class StatusModel(db.Model):
     student_id = db.Column(db.Integer, nullable=False)
     attendance = db.Column(db.Boolean, nullable=False)
     course_id = db.Column(db.Integer, nullable=False)
-    account_id = db.Column(db.Integer, nullable=False)
-    teacher_id = db.Column(db.Integer, nullable=False)
+    # account_id = db.Column(db.Integer, nullable=False)
+    instructor_id = db.Column(db.Integer, nullable=False)
     # tool_consumer_instance_guid = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.now(), nullable=False)
     updated_at = db.Column(
         db.DateTime, default=db.func.now(), onupdate=db.func.now(), nullable=False
     )
-
-    @property
-    def student(self):
-        return self._student
-
-    @student.setter
-    def student(self, value):
-        self._student = value
-
-    def as_dict(self):
-        attributes = {
-            "id": self.id,
-            "attendance": self.attendance,
-            "section_id": self.section_id,
-            "course_id": self.course_id,
-            "stats": self.student_stats(),
-            "student_id": str(self.student_id),
-            "class_date": self.class_date,
-            "teacher_id": str(self.teacher_id),
-        }
-        if self.student:
-            attributes["student"] = self.student
-
-        return attributes
-
-    def student_stats(self):
-        return None
 
     @classmethod
     def initialize_list(
@@ -95,10 +68,3 @@ class StatusModel(db.Model):
             for status in statuses
             if status.section_id == section_id
         }
-
-
-# Usage example
-# from sqlalchemy.orm import Session
-# session = Session()
-# statuses = Status.initialize_list(session, section, class_date, teacher_id,
-# tool_consumer_instance_guid)

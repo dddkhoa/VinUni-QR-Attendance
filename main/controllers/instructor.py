@@ -1,77 +1,40 @@
+from flask import send_file
 import time
-
 import requests
 
-from main import app, config, db
+from main import app, config, db, qr_secret_key
 from main.commons.decorators import (
     check_existing_category,
     check_owner,
     jwt_required,
     validate_input,
 )
-from main.commons.exceptions import CategoryAlreadyExists
-from main.libs.utils import generate_random_attendance_key
-# from main.models.category import CategoryModel
+from main.controllers.section import get_section_by_id_with_enrollments
+from main.libs.qr import generate_new_qr_code
+
 
 # from main.schemas.base import PaginationSchema
 from main.schemas.checkin import QRSchema
 
 
-# Course-related APIs
-@app.route("/api/courses/<str:course_id>/sections", methods=["GET"])
-def get_course_sections(course_id):
-    pass
-
-
-@app.route("/api/courses/<str:course_id>/sections/<str:section_id>", methods=["GET"])
-def get_course_section(course_id, section_id):
-    pass
-
-
-@app.route("/api/courses/<str:course_id>/sections/<str:section_id>/students", methods=["GET"])
-def get_course_section_students(course_id, section_id):
-    pass
-
-
-@app.route("/api/qr/generate", methods=["GET"])
+@app.route("/api/instructors/qr/generate", methods=["GET"])
 @validate_input(QRSchema)
-def get_checkin_qr(data):
-    global attendance_secret_key
-    while True:
-        attendance_secret_key = generate_random_attendance_key()
-        url = config.GOOGLE_QR_API.format(attendance_secret_key)
-        response = requests.get(url).content
-        yield response
+def get_checkin_qr():
+    qr_code_image = generate_new_qr_code(qr_secret_key)
 
-        time.sleep(3)
-
-#
-# @app.route("/categories", methods=["POST"])
-# @jwt_required
-# # @validate_input(CategorySchema)
-# def post_category(user_id, data):
-#     if CategoryModel.query.filter_by(name=data["name"]).one_or_none():
-#         raise CategoryAlreadyExists()
-#
-#     category = CategoryModel(name=data["name"], user_id=user_id)
-#     db.session.add(category)
-#     db.session.commit()
-#     return {}
+    return send_file(qr_code_image, mimetype="image/png")
 
 
-# @app.route("/categories/<int:category_id>", methods=["GET"])
-# @check_existing_category
-# def get_category(category, **__):
-#     return CategorySchema().dump(category)
+@app.route()
+def finish_checkin_session():
+    # Retrieve all attendance status for today session
+    # Fill in the lacking status
+    section_info = get_section_by_id_with_enrollments()
+
+    pass
 
 
-@app.route("/categories/<int:category_id>", methods=["DELETE"])
-@jwt_required
-@check_existing_category
-@check_owner
-def delete_category(category, **__):
-    for item in category.items:
-        db.session.delete(item)
-    db.session.delete(category)
-    db.session.commit()
-    return {}
+@app.route("api/instructors/attendance/edit", methods=["PUT"])
+def edit_attendance():
+    pass
+

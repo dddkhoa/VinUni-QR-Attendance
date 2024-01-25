@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+{#      <meta name="csrf-token" content="{{ csrf_token() }}" />#}
+
     <title>{{ page_title }}</title>
     <script>
       var launchId = "{{ launch_id }}";
     </script>
+
     <link
       href="{{ url_for('static', filename='css/main.3677d495.css') }}"
       rel="stylesheet"
