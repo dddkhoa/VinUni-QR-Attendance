@@ -34,12 +34,12 @@ class AttendanceAssignment:
         present_count = StatusModel.query.filter_by(student_id=student_id,
                                                     section_id=section_id,
                                                     course_id=self.course_id,
-                                                    attendance=StatusType.PRESENT.value).count()
+                                                    status=StatusType.PRESENT.value).count()
 
         late_count = StatusModel.query.filter_by(student_id=student_id,
                                                  course_id=self.course_id,
                                                  section_id=section_id,
-                                                 attendance=StatusType.LATE.value).count()
+                                                 status=StatusType.LATE.value).count()
 
         student_grade = (present_count * StatusGrade.PRESENT.value + late_count * StatusGrade.LATE.value)
         student_grade /= total_attendances

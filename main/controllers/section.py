@@ -1,3 +1,4 @@
+import datetime
 from flask import session, request
 
 from main import app, canvas
@@ -21,11 +22,11 @@ def get_sections_by_course(course_id, **__):
     return response
 
 
-@app.route("/api/courses/<int:course_id>/dates/", methods=["GET"])
-def get_dates_by_course(course_id, **__):
-    statuses = StatusModel.query.filter_by(course_id=course_id).all()
-    class_dates = set(status.class_date for status in statuses)
-    response = {"class_dates": list(class_dates)}
+@app.route("/api/courses/<int:course_id>/sections/<int:section_id>/dates/", methods=["GET"])
+def get_dates_by_course(course_id, section_id, **__):
+    statuses = StatusModel.query.filter_by(course_id=course_id, section_id=section_id).all()
+    class_dates = set((status.date.strftime("%d-%m-%Y")) for status in statuses)
+    response = {"dates": list(class_dates)}
     return response
 
 

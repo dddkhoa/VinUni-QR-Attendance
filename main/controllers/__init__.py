@@ -1,1 +1,1 @@
-from main.controllers import lti_services, section, status, instructor
+from main.controllers import lti_services, section, status, instructor, student
