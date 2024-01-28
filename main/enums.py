@@ -13,6 +13,7 @@ class AppRole(Enum):
 
 
 class LTIRole(Enum):
+    # TODO: Check how these roles are defined in the deployed LMS
     ROLE = "https://purl.imsglobal.org/spec/lti/claim/roles"
     INSTRUCTOR = "http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor"
     TA = ""
@@ -23,6 +24,12 @@ class LTIRole(Enum):
     @classmethod
     def can_grade(cls):
         return [cls.INSTRUCTOR, cls.TA, cls.SCHOOL_ADMIN, cls.SITE_ADMIN]
+
+
+class LTISession(Enum):
+    # TODO: Check how these roles are defined in the deployed LMS
+    ASSIGNMENT = 'https://purl.imsglobal.org/spec/lti-ags/claim/endpoint'
+    NAMES_AND_ROLES = 'https://purl.imsglobal.org/spec/lti-nrps/claim/namesroleservice'
 
 
 class StatusType(Enum):

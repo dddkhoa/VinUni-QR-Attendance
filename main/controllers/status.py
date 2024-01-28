@@ -61,6 +61,7 @@ def submit_grade(course_id, student_id, **__):
 @app.route("/api/courses/<int:course_id>/students/grades", methods=["POST"])
 # @jwt_required
 def submit_grades(course_id, **__):
+    # TODO: need efficient way to create/cache attendance_assignment object
     data = request.get_json()
     student_ids = data.get("student_ids", [])
     attendance_assignment = AttendanceAssignment(canvas, course_id, config.LTI_TOOL_NAME)

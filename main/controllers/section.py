@@ -11,9 +11,11 @@ from main.schemas.section import SectionSchema, SectionListSchema
 def get_sections_by_course(course_id, **__):
     course = canvas.get_course(course_id)
     sections = course.get_sections()
-    results = {'sections': []}
+    results = {'section_list': [], 'course_name': course.name}
     for section in sections:
-        results['sections'].append(SectionSchema().dump(section))
+        results['section_list'].append(SectionSchema().dump(section))
+
+    results['section_list'].pop(-1)  # TODO: fix this as the course title is returned as last section?
 
     response = SectionListSchema().dump(results)
     return response

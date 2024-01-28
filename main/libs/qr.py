@@ -1,4 +1,5 @@
 from io import BytesIO
+import base64
 
 import pyotp
 import qrcode
@@ -31,11 +32,14 @@ def generate_qr_code(data):
     return img_buffer
 
 
-def generate_new_qr_code(qr_secret_key, encoded_message):
+def generate_new_qr_code(qr_secret_key):
     token = get_totp_token(qr_secret_key)
-    encoded_message = encoded_message + token
+    # encoded_message = encoded_message + token
     qr_code_image = generate_qr_code(token)
-    return qr_code_image
+    qr_code_data = qr_code_image.getvalue()
+    base64_image = base64.b64encode(qr_code_data).decode("utf-8")
+
+    return base64_image
 
 
 def verify_token(user_token, secret):

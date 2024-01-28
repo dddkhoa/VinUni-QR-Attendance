@@ -22,6 +22,3 @@ def scan_qr():
         return jsonify({"message": "success"}), 200
     else:
         return jsonify({"message": "failed"}), 400
-
-
-

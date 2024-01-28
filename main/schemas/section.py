@@ -7,9 +7,10 @@ from main.schemas.student import StudentSchema
 class SectionSchema(BaseSchema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
-    course_id = fields.Integer(required=True)
-    students = fields.List(fields.Nested(StudentSchema()), required=True)
+    course_id = fields.Integer(required=False)
+    students = fields.List(fields.Nested(StudentSchema()))
 
 
 class SectionListSchema(BaseSchema):
-    sections = fields.List(fields.Nested(SectionSchema()), required=True)
+    course_name = fields.String(required=True)
+    section_list = fields.List(fields.Nested(SectionSchema()), required=True)

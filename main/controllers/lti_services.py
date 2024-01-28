@@ -16,11 +16,11 @@ from pylti1p3.registration import Registration
 from werkzeug.exceptions import Forbidden
 
 
-from main import app, cache
+from main import app, cache, canvas, config
 from main.commons.exceptions import Forbidden
 from main.libs.utils import get_lti_config
 from main.models.lti_config import LTIConfig
-from main.enums import LTIRole, AppRole
+from main.enums import LTIRole, AppRole, LTISession
 
 
 class ExtendedFlaskMessageLaunch(FlaskMessageLaunch):
@@ -93,20 +93,19 @@ def launch():
 
     # Check launch context for user role: Instructor or Learner
     if LTIRole.LEARNER.value in message_launch_data.get(LTIRole.ROLE.value, []):
-        session["user"] = AppRole.LEARNER.value
+        session["role"] = AppRole.LEARNER.value
     elif LTIRole.INSTRUCTOR.value in message_launch_data.get(LTIRole.ROLE.value, []):
-        session["user"] = AppRole.INSTRUCTOR.value
+        session["role"] = AppRole.INSTRUCTOR.value
     else:
         raise Forbidden()
 
-    session["course_id"] = ""
-    session["user_id"] = ""
+    # TODO: Call CanvasOAuth2Login to get access token first
+    session["user_id"] = canvas.get_current_user().id
+    session["course_id"] = get_course_id(message_launch_data)
 
     session["is_deep_link_launch"] = message_launch.is_deep_link_launch()
     session["launch_id"] = message_launch.get_launch_id()
     session["launch_data"] = message_launch_data
-    session["curr_user_name"] = message_launch_data.get('name', '')
-    session["error"] = False
 
     return render_template("index.html", **session)
 
@@ -198,3 +197,11 @@ def config_json(key_id):
     }
 
     return jsonify(config)
+
+
+def get_course_id(message_launch_data):
+    lti_nrps = message_launch_data.get(LTISession.NAMES_AND_ROLES.value).\
+        get('context_memberships_url')
+
+    course_id = lti_nrps.split('/')[-2]  # TODO: temp hard-coded
+    return course_id
