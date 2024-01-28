@@ -1,9 +1,9 @@
-# Got It's Backend Training Final Project
+# VinUni QR Attendance LTI App
 
 ## Requirements
 
-- Python 3.7+
-- MySQL 5.7+
+- Python 3.9+
+- MySQL 8+
 
 ## Installation
 
