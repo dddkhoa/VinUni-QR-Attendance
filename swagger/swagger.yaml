@@ -1,0 +1,461 @@
+# To view the documentation prior to deployment, use the Swagger Editor at https://editor.swagger.io/
+
+swagger: "2.0"
+info:
+  title: "API Documentation for VinUni QR Attendance App"
+  version: "1.0"
+basePath: /api
+tags:
+  - name: "Status"
+    description: "Operations related to status and attendance"
+  - name: "Courses"
+    description: "Operations related to courses"
+  - name: "Sections"
+    description: "Operations related to sections"
+  - name: "Students"
+    description: "Operations related to students"
+  - name: "Grades"
+    description: "Operations related to grades and attendance"
+
+paths:
+  /api/courses/{course_id}/sections/:
+    get:
+      tags:
+        - "Sections"
+      summary: Retrieve sections by course ID
+      parameters:
+        - name: course_id
+          in: path
+          type: integer
+          required: true
+          description: Course ID
+      responses:
+        200:
+          description: Success
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /courses/{course_id}/sections/{section_id}/dates/:
+    get:
+      tags:
+        - "Sections"
+      summary: Retrieve class dates by course and section ID
+      parameters:
+        - name: course_id
+          in: path
+          type: integer
+          required: true
+          description: Course ID
+        - name: section_id
+          in: path
+          type: integer
+          required: true
+          description: Section ID
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              dates:
+                type: array
+                items:
+                  type: string
+            example:
+              dates:
+                - 01-02-2024
+                - 02-02-2024
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /courses/{course_id}/sections/{section_id}:
+    get:
+      tags:
+        - "Sections"
+      summary: Retrieve section by ID with student enrollments
+      parameters:
+        - name: course_id
+          in: path
+          type: integer
+          required: true
+          description: Course ID
+        - name: section_id
+          in: path
+          type: integer
+          required: true
+          description: Section ID
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/SectionSchema'
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /qr/scan:
+    post:
+      tags:
+        - "Students"
+      summary: "Scan QR Code"
+      description: "Scan a QR code with a token and secret for verification."
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: "QRCodeData"
+          in: "body"
+          description: "Data for QR code scanning"
+          required: true
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: "QR code token"
+              secret:
+                type: string
+                description: "QR code secret"
+      responses:
+        200:
+          description: "QR code scan successful"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: "Scan result message"
+                example:
+                  message: "success"
+        400:
+          description: "QR code scan failed"
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: "Scan result message"
+                example:
+                  message: "failed"
+
+  /courses/{course_id}/students/{student_id}/records:
+    get:
+      tags:
+        - "Students"
+      summary: "Get Student Records"
+      description: "Retrieve student records for a specific course and student."
+      produces:
+        - application/json
+      parameters:
+        - name: "course_id"
+          in: "path"
+          type: integer
+          required: true
+          description: "Course ID"
+        - name: "student_id"
+          in: "path"
+          type: integer
+          required: true
+          description: "Student ID"
+      responses:
+        200:
+          description: "Student records retrieved successfully"
+          schema:
+            $ref: "#/definitions/StudentRecordList"
+        404:
+          description: "Student or course not found"
+        500:
+          description: "Internal Server Error"
+
+  #
+  /courses/{course_id}/sections/{section_id}/statuses:
+    get:
+      tags:
+        - "Status"
+      summary: "Get student statuses by course and section"
+      description: "Returns student status information for a specific course and section."
+      parameters:
+        - name: "course_id"
+          in: "path"
+          description: "ID of the course"
+          required: true
+          type: "integer"
+        - name: "section_id"
+          in: "path"
+          description: "ID of the section"
+          required: true
+          type: "integer"
+        - name: "date"
+          in: "query"
+          description: "Optional date filter (format: dd-mm-yyyy)"
+          required: false
+          type: "string"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/StudentStatusDateListSchema"
+
+  /courses/{course_id}/qr:
+    get:
+      tags:
+        - "Courses"
+      summary: "Get QR code for course check-in"
+      description: "Returns a QR code for course check-in."
+      parameters:
+        - name: "course_id"
+          in: "path"
+          description: "ID of the course"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "object"
+            properties:
+              qr_code:
+                type: "string"
+                description: "Base64 encoded QR code image"
+
+  /courses/{course_id}/sections/{section_id}/statuses/:
+    post:
+      tags:
+        - "Status"
+      summary: "Create student statuses for a section"
+      description: "Creates student statuses for a section based on QR code check-in."
+      parameters:
+        - name: "course_id"
+          in: "path"
+          description: "ID of the course"
+          required: true
+          type: "integer"
+        - name: "section_id"
+          in: "path"
+          description: "ID of the section"
+          required: true
+          type: "integer"
+        - name: "data"
+          in: "body"
+          description: "JSON data containing user information and QR code"
+          required: true
+          schema:
+            $ref: "#/definitions/StatusListSchema"
+      responses:
+        200:
+          description: "Successful operation"
+
+  /statuses/{status_id}:
+    put:
+      tags:
+        - "Status"
+      summary: "Update student status"
+      description: "Updates the status of a student."
+      parameters:
+        - name: "status_id"
+          in: "path"
+          description: "ID of the status"
+          required: true
+          type: "integer"
+        - name: "data"
+          in: "body"
+          description: "JSON data containing updated status information"
+          required: true
+          schema:
+            $ref: "#/definitions/StatusUpdateSchema"
+      responses:
+        200:
+          description: "Successful operation"
+        404:
+          description: "Status not found"
+
+  /courses/{course_id}/students/{student_id}/{status_id}/grades:
+    post:
+      tags:
+        - "Grades"
+      summary: "Submit student grades"
+      description: "Submits grades for a student in a course."
+      parameters:
+        - name: "course_id"
+          in: "path"
+          description: "ID of the course"
+          required: true
+          type: "integer"
+        - name: "student_id"
+          in: "path"
+          description: "ID of the student"
+          required: true
+          type: "integer"
+        - name: "status_id"
+          in: "path"
+          description: "ID of the status"
+          required: true
+          type: "integer"
+      responses:
+        200:
+          description: "Successful operation"
+        404:
+          description: "Student not found"
+
+  /courses/{course_id}/students/grades:
+    post:
+      tags:
+        - "Grades"
+      summary: "Submit multiple student grades"
+      description: "Submits grades for multiple students in a course."
+      parameters:
+        - name: "course_id"
+          in: "path"
+          description: "ID of the course"
+          required: true
+          type: "integer"
+        - name: "data"
+          in: "body"
+          description: "JSON data containing student IDs"
+          required: true
+          schema:
+            $ref: "#/definitions/StudentStatusDateListSchema"
+      responses:
+        200:
+          description: "Successful operation"
+
+definitions:
+  SectionSchema:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        description: "Section ID"
+      name:
+        type: "string"
+        description: "Section name"
+      course_id:
+        type: "integer"
+        description: "Course ID"
+      students:
+        type: "array"
+        items:
+          $ref: "#/definitions/StudentStatusDateSchema"
+        description: "List of students in the section"
+
+  SectionListSchema:
+    type: "object"
+    properties:
+      course_name:
+        type: "string"
+        description: "Name of the course"
+      section_list:
+        type: "array"
+        items:
+          $ref: "#/definitions/SectionSchema"
+        description: "List of sections for the course"
+
+  StudentStatusDateSchema:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "Student name"
+      email:
+        type: "string"
+        description: "Student email (similar to login_id in StudentSchema)"
+      section:
+        type: "integer"
+        description: "Section ID"
+      imageUrl:
+        type: "string"
+        description: "URL to student's image"
+      status:
+        type: "string"
+        description: "Student status"
+      id:
+        type: "integer"
+        description: "Status ID"
+
+  StudentStatusDateListSchema:
+    type: "object"
+    properties:
+      date:
+        type: "string"
+        description: "Date of the status records"
+      students:
+        type: "array"
+        items:
+          $ref: "#/definitions/StudentStatusDateSchema"
+        description: "List of student status records"
+
+  StatusSchema:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        description: "Status ID"
+      class_date:
+        type: "string"
+        format: "date"
+        description: "Class date (dd-mm-yyyy)"
+      section_id:
+        type: "integer"
+        description: "Section ID"
+      student_id:
+        type: "integer"
+        description: "Student ID"
+      status:
+        type: "string"
+        description: "Student status"
+      course_id:
+        type: "integer"
+        description: "Course ID"
+      instructor_id:
+        type: "integer"
+        description: "Instructor ID"
+
+  StatusUpdateSchema:
+    type: "object"
+    properties:
+      student_id:
+        type: "integer"
+        description: "Student ID"
+      section_id:
+        type: "integer"
+        description: "Section ID"
+      course_id:
+        type: "integer"
+        description: "Course ID"
+      class_date:
+        type: "string"
+        format: "date"
+        description: "Class date (dd-mm-yyyy)"
+      attendance:
+        type: "string"
+        description: "Attendance status"
+
+  StatusListSchema:
+    type: "object"
+    properties:
+      statuses:
+        type: "array"
+        items:
+          $ref: "#/definitions/StatusSchema"
+        description: "List of student status records"
+
+  StudentRecord:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Record ID"
+
+  StudentRecordList:
+    type: object
+    properties:
+      attendanceRecords:
+        type: array
+        items:
+          $ref: "#/definitions/StudentRecord"
