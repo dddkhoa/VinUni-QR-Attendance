@@ -6,12 +6,18 @@
 
     <title>{{ page_title }}</title>
     <script>
-      var launchId = "{{ launch_id }}";
-      var role = "{{ user }}";
+      {#var launchId = "{{ launch_id }}";#}
+      {#var role = "{{ user }}";#}
+      window.APP_DATA = {
+          role: "{{ role }}",
+          launchId: "{{ launch_id }}",
+          userId: "{{ user_id }}",
+          courseId: "{{ course_id }}"
+      }
     </script>
 
     <link
-      href="{{ url_for('static', filename='css/main.3677d495.css') }}"
+      href="{{ url_for('static', filename='css/main.5a8fead9.css') }}"
       rel="stylesheet"
     />
   </head>
@@ -19,7 +25,7 @@
     <div id="root"></div>
     <script
       type="text/javascript"
-      src="{{ url_for('static', filename='js/main.1835e10a.js', role=role) }}"
+      src="{{ url_for('static', filename='js/main.f486b7b4.js') }}"
       charset="utf-8"
     ></script>
   </body>

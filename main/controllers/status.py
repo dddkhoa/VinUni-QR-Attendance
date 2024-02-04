@@ -1,11 +1,13 @@
+import base64
 import datetime
 from flask import request
 
-from main import app, db, config, canvas
+from main import app, db, config, canvas, qr_secret_key
 from main.commons.decorators import (
     jwt_required,
     validate_input
 )
+from main.libs.qr import verify_token, generate_new_qr_code
 from main.models.status import StatusModel
 from main.models.attendance_assignment import AttendanceAssignment
 from main.schemas.base import PaginationSchema
@@ -48,16 +50,39 @@ def get_students_statuses(course_id, section_id, **__):
     return response
 
 
-@app.route("/api/statuses/", methods=["POST"])
-# @jwt_required
-@validate_input(StatusListSchema)
-def create_statuses(data, **__):
-    statuses = data.get("statuses", [])
-    for status in statuses:
-        temp_status = StatusModel(**status)
-        db.session.add(temp_status)
+@app.route("/api/courses/<int:course_id>/qr", methods=["GET"])
+# @validate_input(QRSchema)
+def get_checkin_qr(course_id, **__):
+    callback_api = f"/api/courses/${course_id}/statuses"
+    encoded_message = f"{callback_api}+{qr_secret_key}"
+    encoded_message = base64.b32encode(encoded_message.encode()).decode()
+    print(encoded_message)
+    qr_code_image = generate_new_qr_code(encoded_message)
+    return {"qr_code": qr_code_image}
+    # return send_file(qr_code_image, mimetype="image/png")
 
-    db.session.commit()
+
+@app.route("/api/courses/<int:course_id>/sections/<int:section_id>/statuses/", methods=["POST"])
+# @jwt_required
+# @validate_input(StatusListSchema)
+def create_statuses(course_id, data, **__):
+    data = request.get_json()
+
+    # Get Instructor id
+    course = canvas.get_course(course_id)
+    instructor_id = course.get_user(enrollment_type=['teacher'])[0].id
+
+    student_id = data["user_id"]
+    qr_decoded_key = data["qr_decoded_key"]
+    date = data["date"]
+    section_id = StatusModel.query.filter_by(student_id=student_id).one().section_id
+
+    if verify_token(qr_decoded_key, qr_secret_key):
+        new_status = StatusModel(student_id=student_id, course_id=course_id, section_id=section_id,
+                                 date=date, instructor_id=instructor_id, status="present")
+        db.session.add(new_status)
+        db.session.commit()
+
     return {}
 
 

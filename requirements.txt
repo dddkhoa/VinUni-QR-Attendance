@@ -21,3 +21,5 @@ git+https://github.com/ucfopen/pylti1.3.git@master#egg=PyLTI1p3
 pyotp
 qrcode
 apscheduler
+pre-commit
+flasgger

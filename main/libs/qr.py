@@ -21,6 +21,9 @@ def generate_qr_code(data):
         box_size=10,
         border=4,
     )
+    # updated_data =
+    # callback_api = f"/api/courses/${course_id}/statuses"
+    # encoded_message = f"{callback_api}+{qr_secret_key}"
     qr.add_data(data)
     qr.make(fit=True)
 
@@ -34,7 +37,6 @@ def generate_qr_code(data):
 
 def generate_new_qr_code(qr_secret_key):
     token = get_totp_token(qr_secret_key)
-    # encoded_message = encoded_message + token
     qr_code_image = generate_qr_code(token)
     qr_code_data = qr_code_image.getvalue()
     base64_image = base64.b64encode(qr_code_data).decode("utf-8")

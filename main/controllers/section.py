@@ -1,5 +1,4 @@
-import datetime
-from flask import session, request
+from flask import request
 
 from main import app, canvas
 from main.commons.decorators import jwt_required

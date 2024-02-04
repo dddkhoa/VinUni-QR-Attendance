@@ -1,22 +1,17 @@
-import datetime
 import json
 
-from flask import request, render_template, session, url_for, jsonify, redirect
+from flask import request, render_template, session, url_for, jsonify
 from pylti1p3.contrib.flask import (
     FlaskOIDCLogin,
     FlaskMessageLaunch,
     FlaskRequest,
     FlaskCacheDataStorage,
 )
-from pylti1p3.deep_link_resource import DeepLinkResource
 from pylti1p3.exception import LtiException
-from pylti1p3.grade import Grade
-from pylti1p3.lineitem import LineItem
-from pylti1p3.registration import Registration
 from werkzeug.exceptions import Forbidden
 
 
-from main import app, cache, canvas, config
+from main import app, cache, canvas
 from main.commons.exceptions import Forbidden
 from main.libs.utils import get_lti_config
 from main.models.lti_config import LTIConfig
@@ -94,13 +89,14 @@ def launch():
     # Check launch context for user role: Instructor or Learner
     if LTIRole.LEARNER.value in message_launch_data.get(LTIRole.ROLE.value, []):
         session["role"] = AppRole.LEARNER.value
+        session["user_id"] = 3
     elif LTIRole.INSTRUCTOR.value in message_launch_data.get(LTIRole.ROLE.value, []):
         session["role"] = AppRole.INSTRUCTOR.value
+        session["user_id"] = canvas.get_current_user().id
     else:
         raise Forbidden()
 
     # TODO: Call CanvasOAuth2Login to get access token first
-    session["user_id"] = canvas.get_current_user().id
     session["course_id"] = get_course_id(message_launch_data)
 
     session["is_deep_link_launch"] = message_launch.is_deep_link_launch()
@@ -108,45 +104,6 @@ def launch():
     session["launch_data"] = message_launch_data
 
     return render_template("index.html", **session)
-
-
-# @app.route('/api/score/<launch_id>/<earned_score>/', methods=['POST'])
-# def score(launch_id, earned_score):
-#     tool_conf = get_lti_config(session["iss"], session["client_id"])
-#     flask_request = FlaskRequest()
-#     launch_data_storage = get_launch_data_storage()
-#     message_launch = FlaskMessageLaunch.from_cache(launch_id, flask_request, tool_conf,
-#                                                    launch_data_storage=launch_data_storage)
-#
-#     resource_link_id = message_launch.get_launch_data() \
-#         .get('https://purl.imsglobal.org/spec/lti/claim/resource_link', {}).get('id')
-#
-#     if not message_launch.has_ags():
-#         raise Forbidden("Don't have grades!")
-#
-#     sub = message_launch.get_launch_data().get('sub')
-#     timestamp = datetime.datetime.utcnow().isoformat() + 'Z'
-#     earned_score = int(earned_score)
-#
-#     grades = message_launch.get_ags()
-#     sc = Grade()
-#     sc.set_score_given(earned_score) \
-#         .set_score_maximum(100) \
-#         .set_timestamp(timestamp) \
-#         .set_activity_progress('Completed') \
-#         .set_grading_progress('FullyGraded') \
-#         .set_user_id(sub)
-#
-#     sc_line_item = LineItem()
-#     sc_line_item.set_tag('score') \
-#         .set_score_maximum(100) \
-#         .set_label('Score')
-#     if resource_link_id:
-#         sc_line_item.set_resource_id(resource_link_id)
-#
-#     result = grades.put_grade(sc, sc_line_item)
-#
-#     return jsonify({'success': True, 'result': result.get('body')})
 
 
 @app.route('/jwks/', methods=['GET'])

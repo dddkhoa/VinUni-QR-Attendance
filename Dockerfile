@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y default-libmysqlclient-dev
 
 COPY . /app
 
-# TODO: add commands for migrating flask db
+CMD ["flask", "db", "init"]
+CMD ["flask", "db", "migrate"]
+CMD ["flask", "db", "upgrade"]
 
 EXPOSE 2247
 
