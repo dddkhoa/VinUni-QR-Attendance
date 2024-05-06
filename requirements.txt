@@ -13,7 +13,7 @@ PyMySQL>=1.0.2
 SQLAlchemy==1.4.26
 alembic>=1.7.4
 marshmallow>=3.14.0
-werkzeug==2.0.3
+werkzeug==3.0.3
 canvasapi
 boto3==1.26.*
 botocore==1.29.*
