@@ -1,0 +1,32 @@
+.unbold {
+  font-weight: normal;
+}
+.session-info-container {
+   
+    margin: auto;
+    width: 50rem;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
+
+  
+  .section {
+    margin-bottom: 20px;
+    margin-right: 20px;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  
+  .section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .section select, .section input[type=date], .section input[type=text] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
+  

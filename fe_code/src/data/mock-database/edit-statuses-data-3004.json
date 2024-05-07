@@ -1,0 +1,160 @@
+{
+  "1": [
+    { 
+      "date": "27-01-2024",
+      "students": [
+        {
+          "name": "Quinn Martinez",
+          "email": "quinnmartinez@example.com",
+          "section": 1,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Late",
+          "id": 1
+        },
+        {
+          "name": "Quinn Moore",
+          "email": "quinnmoore@example.com",
+          "section": 1,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Present",
+          "id": 2
+        }
+      ]
+    },
+    {
+      "date": "26-01-2024",
+      "students": [
+        {
+          "name": "Casey Jones",
+          "email": "caseyjones@example.com",
+          "section": 2,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Present",
+          "id": 21
+        },
+        {
+          "name": "Casey Johnson",
+          "email": "caseyjohnson@example.com",
+          "section": 2,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Absent",
+          "id": 22
+        },
+        {
+          "name": "Reese Johnson",
+          "email": "reesejohnson@example.com",
+          "section": 2,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Late",
+          "id": 23
+        },
+        {
+          "name": "Sawyer Moore",
+          "email": "sawyermoore@example.com",
+          "section": 3,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Late",
+          "id": 60
+        }
+      ]
+    }
+  ],
+  "2": [
+    {
+      "date": "26-01-2024",
+      "students": [
+        {
+          "name": "Reese Smith",
+          "email": "reesesmith@example.com",
+          "section": 1,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Absent",
+          "id": 61
+        },
+        {
+          "name": "Skyler Williams",
+          "email": "skylerwilliams@example.com",
+          "section": 1,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Absent",
+          "id": 80
+        }
+      ]
+    },
+    {
+      "date": "25-01-2024",
+      "students": [
+        {
+          "name": "Quinn Miller",
+          "email": "quinnmiller@example.com",
+          "section": 2,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Present",
+          "id": 81
+        },
+        {
+          "name": "Alex Martinez",
+          "email": "alexmartinez@example.com",
+          "section": 2,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Late",
+          "id": 82
+        },
+        {
+          "name": "Elliot Miller",
+          "email": "elliotmiller@example.com",
+          "section": 2,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Late",
+          "id": 100
+        }
+      ]
+    },
+    {
+      "date": "24-01-2024",
+      "students": [
+        {
+          "name": "Alex Jackson",
+          "email": "alexjackson@example.com",
+          "section": 3,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Absent",
+          "id": 101
+        },
+        {
+          "name": "Quinn Lopez",
+          "email": "quinnlopez@example.com",
+          "section": 3,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Late",
+          "id": 102
+        },
+        {
+          "name": "Alex Brown",
+          "email": "alexbrown@example.com",
+          "section": 3,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Late",
+          "id": 103
+        },
+        {
+          "name": "Jordan Lopez",
+          "email": "jordanlopez@example.com",
+          "section": 3,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Absent",
+          "id": 119
+        },
+        {
+          "name": "Jesse Gonzalez",
+          "email": "jessegonzalez@example.com",
+          "section": 3,
+          "imageUrl": "https://via.placeholder.com/150",
+          "status": "Present",
+          "id": 120
+        }
+      ]
+    }
+  ]
+}
+  

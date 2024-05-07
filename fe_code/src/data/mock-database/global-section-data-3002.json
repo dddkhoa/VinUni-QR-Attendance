@@ -1,0 +1,19 @@
+{
+    "api": {
+        "course_name": "Introduction to Philosophy",
+        "section_list": [
+            {
+                "section_name": "Section 1",
+                "id": 1
+            },
+            {
+                "section_name": "Section 2",
+                "id": 2
+            },
+            {
+                "section_name": "Section 3",
+                "id": 3
+            }
+        ]
+    }   
+}

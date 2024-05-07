@@ -1,0 +1,334 @@
+.countdown-container {
+  width: 300px;
+  height: 150px;
+  border: 2px solid #3498db;
+  border-radius: 8px; /* Add rounded corners for a softer look */
+  background-color: #faf2f2; /* Set a light background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 400px;
+  right: 200px;
+  transition: transform 0.3s ease-in-out; /* Add a smooth transition effect */
+
+  
+}
+
+.countdown-container h2,
+.countdown-container p {
+  margin: 0;
+}
+
+.countdown-container1 {
+  width: 300px;
+  height: 300px;
+  border: 2px solid #3498db;
+  border-radius: 8px; /* Add rounded corners for a softer look */
+  background-color: #faf2f2; /* Set a light background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 400px;
+  right: 200px;
+  transition: transform 0.3s ease-in-out; /* Add a smooth transition effect */
+
+  
+}
+
+/*Instruction message box*/
+.new-message-box {
+  position: fixed;
+  padding: 13px;
+  border-radius: 10px;
+  background-color: #3aaacc; /* Light Orange Background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  top: 47%; 
+  right: 17.5%;
+  z-index: 2000;
+  width: 175px;
+}
+
+/*QR Code attendance box*/
+.new-message-box1 {
+  position: fixed;
+  padding: 13px;
+  border-radius: 10px;
+  background-color: #3aaacc; /* Light Orange Background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  top: 20%;
+  right: 60%;
+  z-index: 2000;
+  width: 300px;
+}
+
+.instruction-text {
+  color: #fff; /* White Text */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.message-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 60px;
+  background-color: #fffcfc;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 250px;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button:hover {
+  color: #555;
+}
+
+.message-box h2 {
+  font-weight: normal;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  color: #333;
+
+}
+
+.message-box p {
+  font-size: 1em;
+  line-height: 1.4;
+  color: #666;
+}
+
+.message-box button {
+  padding: 5px 5px;
+  background-color: rgba(2, 2, 2, 0);
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.5em;
+  transition: background-color 0.3s ease;
+}
+
+.message-box button:hover {
+  background-color: #0056b3;
+}
+
+
+.gif-container {
+  text-align: center; /* Center the GIF */
+  margin-top: 10px; /* Adjust the margin as needed */
+}
+
+.gif-container img {
+  max-width: 100%; /* Ensure the GIF doesn't exceed its container width */
+}
+
+.manual-check-button {
+  position: fixed;
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 10px; /* Adjust the margin as needed */
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: -200px;
+  margin-right: 260px;
+}
+
+.manual-check-button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+
+/* Add any additional styling as needed */
+
+
+
+.top-bar {
+  position: fixed;
+  background-color: #3aaacc;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  width: 1000px;
+  border-radius: 30px; /* Add rounded corners for a softer look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  top: 5%;
+  left: 20%;
+  
+}
+
+
+/* TimerDialog.css */
+/* .dialogContainer {
+  background-color: #121212; /* Dark background */
+  /* border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+} */ 
+
+.timerDisplay {
+  color: #fff; /* White text */
+  font-size: 48px; /* Large text size for the timer */
+  font-weight: bold;
+  margin: 20px 0;
+  letter-spacing: 2px;
+}
+
+.controlButton {
+  background: none;
+  border: none;
+  color: #0af; /* Cyan color for control buttons */
+  cursor: pointer;
+  font-size: 25px;
+  margin: 0 10px;
+}
+
+.controlButton:focus {
+  outline: none;
+}
+
+.timerControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hide the default MUI Dialog scroll paper */
+/* .MuiDialog-scrollPaper {
+  background-color: transparent;
+} */
+
+/* Hide the default MUI Dialog paper */
+.MuiPaper-root {
+  box-shadow: none;
+  background-color: transparent;
+}
+.timer-dialog {
+  background-color: #2c2c2e; /* Dark background */
+  color: white;
+}
+
+.timer-typography {
+  font-size: 1.5rem; /* Larger text */
+  color: #0a84ff; /* Blue text */
+}
+
+.timer-slider {
+  color: #0a84ff; /* Blue slider color */
+}
+
+.timer-slider .MuiSlider-thumb {
+  background-color: #fff; /* White thumb */
+}
+
+.timer-slider .MuiSlider-rail {
+  opacity: 0.3; /* Less visible rail */
+}
+
+.timer-slider .MuiSlider-mark {
+  background-color: #0a84ff; /* Blue marks */
+  height: 8px; /* Taller marks */
+}
+
+.timer-slider .MuiSlider-markActive {
+  opacity: 1; /* Fully visible active mark */
+}
+
+.timer-button {
+  background-color: #0a84ff; /* Blue button */
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase; /* All caps */
+  border-radius: 20px; /* Rounded corners */
+  padding: 10px 20px; /* Larger padding */
+}
+
+.timer-button:hover {
+  background-color: #007aff; /* Lighter blue on hover */
+}
+
+
+
+.custom-dialog-actions button {
+  background-color: #007BFF; /* Primary blue color */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding for larger button */
+  text-transform: uppercase; /* Uppercase text */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  font-weight: bold; /* Bold font */
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.5); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease; /* Transition for hover effect */
+}
+
+.custom-dialog-actions button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.custom-dialog-actions button:active {
+  box-shadow: 0 1px 2px rgba(0, 123, 255, 0.5); /* Smaller shadow for click effect */
+}
+
+.custom-dialog-actions button:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Focus ring */
+}
+
+.custom-dialog {
+  border-radius: 8px; /* Rounded corners for the dialog */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+  overflow: hidden; /* Ensures the border radius clips the content */
+}
+
+.custom-dialog-title {
+  background-color: #f5f5f5; /* Light grey background for the title */
+  color: #333; /* Dark grey text for contrast */
+  padding: 16px 24px; /* Comfortable padding around the title */
+  font-size: 1.25rem; /* Slightly larger font size for the title */
+  font-weight: 600; /* Bold font weight for the title */
+  border-bottom: 1px solid #ddd; /* Separator for the title */
+}
+
+.custom-dialog-content {
+  padding: 20px; /* Padding inside the dialog content */
+}
+
+.custom-dialog-actions {
+  padding: 16px 24px; /* Padding around the action buttons */
+  justify-content: flex-start; /* Align buttons to the left */
+  background-color: #f5f5f5; /* Light grey background for the actions area */
+  border-top: 1px solid #ddd; /* Separator for the actions */
+}
+
+.custom-text-field {
+  margin: 8px 0; /* Margin for top and bottom */
+  /* If you need more specific styles for the text fields, add them here */
+}

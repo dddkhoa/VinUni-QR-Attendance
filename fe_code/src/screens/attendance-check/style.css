@@ -1,0 +1,171 @@
+/* Each student row */
+
+
+.student-row {
+    .avatar {
+        border-radius: 50%;
+        display: flex;
+        width: 20px;
+    
+    }
+    display: flex;   
+    height: 70px;
+
+}
+
+.date-picker {
+  width: 15%;
+  padding: 8px;
+  margin-right: 10px;
+  border: 2px solid #154884;
+  border-radius: 20px;
+  background-color: #E3EEFA;
+  text-decoration-color: #154884;
+}
+
+
+.title {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between; 
+}
+
+.frame {
+    position: absolute;
+    height: 500px;
+    width: 1100px;
+    margin-top: 2%;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.student-info {
+    margin-left: 0px;
+    width: 450px;
+    .student-name{
+        margin-bottom: 0px;
+
+    }
+    .student-email{
+        margin-top: 0px;
+    }
+}
+
+
+
+/* Main container for the attendance check */
+.attendance-check {
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Each student row */
+  .student-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    
+    /* border-bottom: 1px solid #e1e1e1; */
+  }
+
+  .mark-all {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+    /* border-bottom: 1px solid #e1e1e1; */
+  }
+  
+  /* Student name and email */
+  .student-name,
+  .student-email {
+    margin-right: 15px;
+  }
+  
+  /* Container for the attendance buttons */
+  .attendance-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Base styles for buttons */
+  .attendance-buttons button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    background-color: #d9d9d9; /* Default blurred color */
+  }
+  
+  /* Dash overlay for non-selected buttons */
+  .attendance-buttons button::after {
+    content: '-';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    line-height: normal;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Styles for the buttons when selected */
+  .attendance-buttons button.attend.selected {
+    background-color: #154884; /* Blue for attend */
+  }
+  
+  .attendance-buttons button.late.selected {
+    background-color: #ffc13c; /* Yellow for late */
+  }
+  
+  .attendance-buttons button.absent.selected,
+  .attendance-buttons button.excused.selected,
+  .attendance-buttons button.not-excused.selected {
+    background-color: #c72027; /* Red for absent and excused/not excused */
+  }
+  
+  /* Hide the dash when the button is selected */
+  .attendance-buttons button.selected::after {
+    opacity: 0;
+  }
+  
+  /* Show the dash overlay for non-selected buttons */
+  .attendance-buttons button:not(.selected)::after {
+    opacity: 1;
+  }
+  
+  /* Styles for the total attendance summary */
+  .attendance-totals {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #e1e1e1;
+  }
+  
+  /* Specific styles for 'Excused' and 'Not Excused' buttons to match the absent color */
+  .excused,
+  .not-excused {
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    background-color: #d9d9d9; /* Default blurred color for excused/not-excused */
+  }
+  
+  /* Styles for the excused and not-excused buttons when selected */
+  .excused.selected,
+  .not-excused.selected {
+    background-color: #c72027; /* Red for excused/not excused, matching absent */
+  }
+  

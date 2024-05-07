@@ -1,0 +1,153 @@
+{
+  "studentID": "V202100395",
+  "attendanceRecords": [
+    {
+      "id": 1,
+      "date": "Jun 23",
+      "day": "Thursday",
+      "status": "Present",
+      "attendance": 1
+    },
+    {
+      "id": 1,
+      "date": "Jun 21",
+      "day": "Thursday",
+      "status": "Absent",
+      "attendance": 0
+    },
+    {
+      "id": 1,
+      "date": "Jun 27",
+      "day": "Thursday",
+      "status": "Late",
+      "attendance": 0.8
+    },
+    {
+      "id": 1,
+      "date": "Jun 26",
+      "day": "Thursday",
+      "status": "Present",
+      "attendance": 1
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Absent",
+      "attendance": 0
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Late",
+      "attendance": 0.8
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Present",
+      "attendance": 1
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Absent",
+      "attendance": 0
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Late",
+      "attendance": 0.8
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Present",
+      "attendance": 1
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Absent",
+      "attendance": 0
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Late",
+      "attendance": 0.8
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Present",
+      "attendance": 1
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Absent",
+      "attendance": 0
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Late",
+      "attendance": 0.8
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Present",
+      "attendance": 1
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Absent",
+      "attendance": 0
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Late",
+      "attendance": 0.8
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Present",
+      "attendance": 1
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Absent",
+      "attendance": 0
+    },
+    {
+      "id": 1,
+      "date": "Jun 22",
+      "day": "Thursday",
+      "status": "Late",
+      "attendance": 0.8
+    }
+  ]
+}
+  
