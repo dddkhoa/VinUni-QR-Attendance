@@ -1,6 +1,6 @@
 
-
-npm install (fe_code to frontend)
+cd fe_code
+npm install 
 npm run build (fe_code to frontend)
 
 edit https://github.com/dddkhoa/VinUni-QR-Attendance/blob/076bb8cfceec90f3628c25c67ff0c3312e9c4a98/frontend/templates/index.html#L20 css path to newly generated path
